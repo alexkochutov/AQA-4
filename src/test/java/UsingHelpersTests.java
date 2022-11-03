@@ -1,19 +1,22 @@
-import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.selector.ByTagAndText;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Condition.exactOwnText;
+import org.junit.jupiter.api.Test;
+
+import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Condition.exactOwnText;
+import static com.codeborne.selenide.Selectors.byTagAndText;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 
 public class UsingHelpersTests {
+    int OFFSET_DAYS = 30;
+
     String[] availableLetters = {
             "Аб", "Ан", "Ар", "Ас", "Ба", "Бе", "Би", "Бл", "Бр", "Ве", "Вл", "Во", "Га", "Го","Гр",
             "Ек", "Ив", "Иж", "Ир", "Йо", "Ка", "Ке", "Ки", "Ко", "Кр", "Ку", "Кы", "Ли", "Ма", "Мо",
@@ -59,12 +62,12 @@ public class UsingHelpersTests {
 
         // Set new date (one week forward)
         LocalDate currentDate = LocalDate.now();
-        LocalDate targetDate = LocalDate.now().plusDays(7);
+        LocalDate targetDate = LocalDate.now().plusDays(OFFSET_DAYS);
 
         if (currentDate.getMonthValue() != targetDate.getMonthValue()) {
             calendar.$("[data-step='1'].calendar__arrow_direction_right").click();
         }
-        calendar.$(new ByTagAndText("td", "" + targetDate.getDayOfMonth())).click();
+        calendar.$(byTagAndText("td", "" + targetDate.getDayOfMonth())).click();
 
         // Fill all the other field
         form.$("[data-test-id='name'] input").setValue("Василий Степанов");
